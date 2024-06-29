@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(apriltag VERSION 3.3.0 LANGUAGES C CXX)
+project(apriltagfrc971 VERSION 3.3.0 LANGUAGES C CXX)
 
 if(POLICY CMP0077)
     cmake_policy(SET CMP0077 NEW)
@@ -103,13 +103,13 @@ install(TARGETS ${PROJECT_NAME} EXPORT ${targets_export_name}
         )
 
 install(EXPORT ${targets_export_name}
-    NAMESPACE apriltag::
+    NAMESPACE apriltagfrc971::
     DESTINATION ${config_install_dir})
 
 install(FILES ${project_config} ${version_config} DESTINATION ${config_install_dir})
 
-export(TARGETS apriltag
-    NAMESPACE apriltag::
+export(TARGETS apriltagfrc971
+    NAMESPACE apriltagfrc971::
     FILE ${generated_dir}/${targets_export_name}.cmake)
 
 
@@ -148,11 +148,11 @@ if (NOT Python3_NOT_FOUND AND NOT Numpy_NOT_FOUND AND PYTHONLIBS_FOUND AND BUILD
     add_custom_command(OUTPUT apriltag_pywrap.o
         COMMAND ${CMAKE_C_COMPILER} ${PY_CFLAGS} -I${PROJECT_BINARY_DIR} -c -o apriltag_pywrap.o ${CMAKE_CURRENT_SOURCE_DIR}/apriltag_pywrap.c
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/apriltag_pywrap.c ${PROJECT_BINARY_DIR}/apriltag_detect.docstring.h ${PROJECT_BINARY_DIR}/apriltag_py_type.docstring.h)
-    add_custom_command(OUTPUT apriltag${PY_EXT_SUFFIX}
-        COMMAND ${PY_LINKER} ${PY_LDFLAGS} -Wl,-rpath,lib apriltag_pywrap.o $<TARGET_FILE:apriltag> -o apriltag${PY_EXT_SUFFIX}
+    add_custom_command(OUTPUT apriltagfrc971${PY_EXT_SUFFIX}
+        COMMAND ${PY_LINKER} ${PY_LDFLAGS} -Wl,-rpath,lib apriltag_pywrap.o $<TARGET_FILE:apriltagfrc971> -o apriltagfrc971${PY_EXT_SUFFIX}
         DEPENDS ${PROJECT_NAME} apriltag_pywrap.o)
-    add_custom_target(apriltag_python ALL
-        DEPENDS apriltag${PY_EXT_SUFFIX})
+    add_custom_target(apriltagfrc971_python ALL
+        DEPENDS apriltagfrc971${PY_EXT_SUFFIX})
 
 execute_process(COMMAND python3 -m site --user-site OUTPUT_VARIABLE PY_DEST)
 string(STRIP ${PY_DEST} PY_DEST)
@@ -176,7 +176,7 @@ if(OpenCV_FOUND)
     endif()
 
     add_executable(opencv_demo example/opencv_demo.cc)
-    target_link_libraries(opencv_demo apriltag ${OpenCV_LIBRARIES})
+    target_link_libraries(opencv_demo apriltagfrc971 ${OpenCV_LIBRARIES})
     set_target_properties(opencv_demo PROPERTIES CXX_STANDARD 11)
     install(TARGETS opencv_demo RUNTIME DESTINATION bin)
 else()
